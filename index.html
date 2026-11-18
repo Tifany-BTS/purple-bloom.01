@@ -34,7 +34,6 @@
       if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
     })();
   </script>
-  <!-- Paste this right before your closing </head> tag -->
    <script type="text/javascript">
   (function(e,c){if(!c.__SV){var l,h;window.mixpanel=c;c._i=[];c.init=function(q,r,f){function t(d,a){var g=a.split(".");2==g.length&&(d=d[g[0]],a=g[1]);d[a]=function(){d.push([a].concat(Array.prototype.slice.call(arguments,0)))}}var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";b.people=b.people||[];b.toString=function(d){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);d||(a+=" (stub)");return a};b.people.toString=function(){return b.toString(1)+".people (stub)"};l="disable time_event track track_pageview track_links track_forms track_with_groups add_group set_group remove_group register register_once alias unregister identify name_tag set_config reset opt_in_tracking opt_out_tracking has_opted_in_tracking has_opted_out_tracking clear_opt_in_out_tracking start_batch_senders start_session_recording stop_session_recording people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user people.remove".split(" ");
   for(h=0;h<l.length;h++)t(b,l[h]);var n="set set_once union unset remove delete".split(" ");b.get_group=function(){function d(p){a[p]=function(){b.push([g,[p].concat(Array.prototype.slice.call(arguments,0))])}}for(var a={},g=["get_group"].concat(Array.prototype.slice.call(arguments,0)),m=0;m<n.length;m++)d(n[m]);return a};c._i.push([q,r,f])};c.__SV=1.2;var k=e.createElement("script");k.type="text/javascript";k.async=!0;k.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===
@@ -66,7 +65,7 @@
 
   <header class="site-header" role="banner">
     <div class="site-header__inner">
-      <a class="site-logo" href="#inicio" aria-label="Purple Bloom — Inicio">
+      <a class="site-logo" href="#inicio" aria-label="Purple Bloom â€” Inicio">
         <svg class="site-logo__mark" aria-hidden="true" viewBox="0 0 64 64" width="40" height="40" fill="currentColor">
           <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z"/>
           <path d="M32,32 C24,28 18,16 32,4 C46,16 40,28 32,32 Z" transform="rotate(90 32 32)"/>
@@ -85,7 +84,7 @@
       </a>
 
       <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
-        <span class="visually-hidden">Abrir menú</span>
+        <span class="visually-hidden">Abrir menÃº</span>
         <span class="nav-toggle__icon" aria-hidden="true">
           <span class="nav-toggle__bar"></span>
           <span class="nav-toggle__bar"></span>
@@ -93,20 +92,20 @@
         </span>
       </button>
 
-      <nav class="site-nav" id="site-nav" aria-label="Navegación principal">
+      <nav class="site-nav" id="site-nav" aria-label="NavegaciÃ³n principal">
         <ul class="site-nav__list">
           <li><a href="#inicio" aria-current="page">Inicio</a></li>
-          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="catalogo.html">CatÃ¡logo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
           <li><a href="#contacto">Contacto</a></li>
           <li><a href="asistente-colores.html">Asistente de color</a></li>
         </ul>
       </nav>
 
-      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menú" hidden></button>
+      <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Cerrar menÃº" hidden></button>
 
       <div class="site-header__aux">
-        <a href="iniciar-sesion.html" class="site-header__login">Iniciar sesión</a>
+        <a href="iniciar-sesion.html" class="site-header__login">Iniciar sesiÃ³n</a>
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a modo oscuro" aria-pressed="false">
           <svg class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
@@ -123,7 +122,7 @@
   <main id="contenido-principal">
     <!-- Hero / Carrusel (CSS puro, sin JS) -->
     <section id="inicio" class="hero" aria-labelledby="hero-heading" aria-roledescription="carrusel">
-      <h1 id="hero-heading" class="visually-hidden">Purple Bloom — Noticias y tendencias</h1>
+      <h1 id="hero-heading" class="visually-hidden">Purple Bloom â€” Noticias y tendencias</h1>
 
       <div class="hero__carousel">
         <input type="radio" name="hero-slide" id="hero-slide-1" class="hero__radio" checked>
@@ -173,18 +172,18 @@
       </div>
     </section>
 
-    <!-- Introducción: declaración de marca (no un "quiénes somos" clásico),
-         a dos columnas — inspirada en la referencia que compartió el usuario. -->
+    <!-- IntroducciÃ³n: declaraciÃ³n de marca (no un "quiÃ©nes somos" clÃ¡sico),
+         a dos columnas â€” inspirada en la referencia que compartiÃ³ el usuario. -->
     <section class="intro" aria-labelledby="intro-heading">
       <div class="container intro__layout">
         <div class="intro__text">
           <p class="intro__eyebrow"><span class="intro__eyebrow-bar" aria-hidden="true"></span>Hola, bienvenida</p>
           <h2 id="intro-heading">Creamos moda que te hace <span class="intro__highlight">brillar</span>.</h2>
-          <p class="intro__lead">Piezas pensadas con color e intención, para que encuentres lo tuyo sin esfuerzo.</p>
-          <p class="intro__tagline">Diseño · Catálogo · Experiencia de compra</p>
+          <p class="intro__lead">Piezas pensadas con color e intenciÃ³n, para que encuentres lo tuyo sin esfuerzo.</p>
+          <p class="intro__tagline">DiseÃ±o Â· CatÃ¡logo Â· Experiencia de compra</p>
           <div class="intro__cta">
             <a href="catalogo.html" class="btn btn--outline btn--arrow intro__cta-btn">
-              Explora el catálogo
+              Explora el catÃ¡logo
               <svg class="btn__arrow" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -193,12 +192,12 @@
         </div>
 
         <div class="intro__features">
-          <p class="intro__features-lead">Purple Bloom conecta diseño, catálogo y experiencia de compra en un solo lugar, pensado exclusivamente para moda femenina.</p>
+          <p class="intro__features-lead">Purple Bloom conecta diseÃ±o, catÃ¡logo y experiencia de compra en un solo lugar, pensado exclusivamente para moda femenina.</p>
           <ul class="intro__feature-grid">
             <li class="intro__feature">
               <p class="intro__feature-number">01</p>
-              <h3 class="intro__feature-title">Asesoría &amp; Estilo</h3>
-              <p class="intro__feature-desc">Sugerencias a tu medida al iniciar sesión.</p>
+              <h3 class="intro__feature-title">AsesorÃ­a &amp; Estilo</h3>
+              <p class="intro__feature-desc">Sugerencias a tu medida al iniciar sesiÃ³n.</p>
             </li>
             <li class="intro__feature">
               <p class="intro__feature-number">02</p>
@@ -224,8 +223,8 @@
     <section id="destacados" class="favorites section--watermark surface-ivory surface-sky" aria-labelledby="favorites-heading">
       <div class="container">
         <header class="section-header">
-          <h2 id="favorites-heading">Lo más elegido</h2>
-          <p>Las piezas más elegidas por nuestra comunidad.</p>
+          <h2 id="favorites-heading">Lo mÃ¡s elegido</h2>
+          <p>Las piezas mÃ¡s elegidas por nuestra comunidad.</p>
         </header>
 
         <div class="favorites__carousel">
@@ -239,17 +238,17 @@
             <span class="product-card__badge">Oferta</span>
             <img class="product-card__image" src="img/blusa-lavanda.jpg" alt="Blusa Lavanda: blusa de seda en tono lavanda con lazo en la cintura" width="800" height="533" loading="lazy">
             <h3 id="fav-1-name"><a href="producto.html?id=blusa-lavanda">Blusa Lavanda</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
-            <p class="product-card__desc">Blusa de seda en tono lavanda, corte relajado ideal para el día a día.</p>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span><span class="visually-hidden">5 de 5 estrellas</span></p>
+            <p class="product-card__desc">Blusa de seda en tono lavanda, corte relajado ideal para el dÃ­a a dÃ­a.</p>
             <div class="product-card__price-row">
               <p class="product-card__price"><span class="visually-hidden">Precio: </span>$49.99</p>
               <span class="product-card__original-price"><span class="visually-hidden">Precio anterior: </span>$62.49</span>
               <span class="product-card__discount"><span class="visually-hidden">Descuento: </span>-20%</span>
             </div>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-lavanda" aria-label="Añadir Blusa Lavanda al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-lavanda" aria-label="AÃ±adir Blusa Lavanda al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Lavanda a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir Blusa Lavanda a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -259,13 +258,13 @@
           <article class="product-card" role="listitem" aria-labelledby="fav-2-name">
             <img class="product-card__image" src="img/vestido-violeta.jpg" alt="Vestido Violeta: vestido midi violeta con bordado floral y lazo en la cintura" width="800" height="533" loading="lazy">
             <h3 id="fav-2-name"><a href="producto.html?id=vestido-violeta">Vestido Violeta</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span><span class="visually-hidden">5 de 5 estrellas</span></p>
             <p class="product-card__desc">Vestido midi con detalle floral, perfecto para ocasiones especiales.</p>
             <p class="product-card__price"><span class="visually-hidden">Precio: </span>$79.99</p>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-violeta" aria-label="Añadir Vestido Violeta al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-violeta" aria-label="AÃ±adir Vestido Violeta al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Violeta a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir Vestido Violeta a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -273,15 +272,15 @@
           </article>
 
           <article class="product-card" role="listitem" aria-labelledby="fav-3-name">
-            <img class="product-card__image" src="img/pantalon-berenjena.jpg" alt="Pantalón Berenjena: pantalón de corte recto en tono berenjena con pinzas" width="800" height="533" loading="lazy">
-            <h3 id="fav-3-name"><a href="producto.html?id=pantalon-berenjena">Pantalón Berenjena</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
-            <p class="product-card__desc">Pantalón de corte recto en tono berenjena, versátil y cómodo.</p>
+            <img class="product-card__image" src="img/pantalon-berenjena.jpg" alt="PantalÃ³n Berenjena: pantalÃ³n de corte recto en tono berenjena con pinzas" width="800" height="533" loading="lazy">
+            <h3 id="fav-3-name"><a href="producto.html?id=pantalon-berenjena">PantalÃ³n Berenjena</a></h3>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜†</span><span class="visually-hidden">4 de 5 estrellas</span></p>
+            <p class="product-card__desc">PantalÃ³n de corte recto en tono berenjena, versÃ¡til y cÃ³modo.</p>
             <p class="product-card__price"><span class="visually-hidden">Precio: </span>$59.99</p>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-berenjena" aria-label="Añadir Pantalón Berenjena al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-berenjena" aria-label="AÃ±adir PantalÃ³n Berenjena al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Berenjena a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir PantalÃ³n Berenjena a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -290,19 +289,19 @@
 
           <article class="product-card" role="listitem" aria-labelledby="fav-4-name">
             <span class="product-card__badge">Oferta</span>
-            <img class="product-card__image" src="img/blusa-clasica.jpg" alt="Blusa Clásica: camisa blanca de manga larga con botones y cuello camisero" width="800" height="533" loading="lazy">
-            <h3 id="fav-4-name"><a href="producto.html?id=blusa-clasica">Blusa Clásica</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
+            <img class="product-card__image" src="img/blusa-clasica.jpg" alt="Blusa ClÃ¡sica: camisa blanca de manga larga con botones y cuello camisero" width="800" height="533" loading="lazy">
+            <h3 id="fav-4-name"><a href="producto.html?id=blusa-clasica">Blusa ClÃ¡sica</a></h3>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜†</span><span class="visually-hidden">4 de 5 estrellas</span></p>
             <p class="product-card__desc">Blusa atemporal de corte simple, ideal para combinar con cualquier look.</p>
             <div class="product-card__price-row">
               <p class="product-card__price"><span class="visually-hidden">Precio: </span>$39.99</p>
               <span class="product-card__original-price"><span class="visually-hidden">Precio anterior: </span>$49.99</span>
               <span class="product-card__discount"><span class="visually-hidden">Descuento: </span>-20%</span>
             </div>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-clasica" aria-label="Añadir Blusa Clásica al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-clasica" aria-label="AÃ±adir Blusa ClÃ¡sica al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Clásica a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir Blusa ClÃ¡sica a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -312,13 +311,13 @@
           <article class="product-card" role="listitem" aria-labelledby="fav-5-name">
             <img class="product-card__image" src="img/vestido-elegante.jpg" alt="Vestido Elegante: vestido largo color crudo de manga larga con bordado y borde festoneado" width="800" height="533" loading="lazy">
             <h3 id="fav-5-name"><a href="producto.html?id=vestido-elegante">Vestido Elegante</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
-            <p class="product-card__desc">Vestido de líneas limpias pensado para ocasiones especiales.</p>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span><span class="visually-hidden">5 de 5 estrellas</span></p>
+            <p class="product-card__desc">Vestido de lÃ­neas limpias pensado para ocasiones especiales.</p>
             <p class="product-card__price"><span class="visually-hidden">Precio: </span>$84.99</p>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-elegante" aria-label="Añadir Vestido Elegante al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-elegante" aria-label="AÃ±adir Vestido Elegante al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Elegante a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir Vestido Elegante a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -326,15 +325,15 @@
           </article>
 
           <article class="product-card" role="listitem" aria-labelledby="fav-6-name">
-            <img class="product-card__image" src="img/pantalon-slim.jpg" alt="Pantalón Slim: pantalón negro de tiro alto con pinzas y corte ajustado" width="800" height="533" loading="lazy">
-            <h3 id="fav-6-name"><a href="producto.html?id=pantalon-slim">Pantalón Slim</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
-            <p class="product-card__desc">Pantalón de corte ajustado que estiliza la silueta.</p>
+            <img class="product-card__image" src="img/pantalon-slim.jpg" alt="PantalÃ³n Slim: pantalÃ³n negro de tiro alto con pinzas y corte ajustado" width="800" height="533" loading="lazy">
+            <h3 id="fav-6-name"><a href="producto.html?id=pantalon-slim">PantalÃ³n Slim</a></h3>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜†</span><span class="visually-hidden">4 de 5 estrellas</span></p>
+            <p class="product-card__desc">PantalÃ³n de corte ajustado que estiliza la silueta.</p>
             <p class="product-card__price"><span class="visually-hidden">Precio: </span>$54.99</p>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-slim" aria-label="Añadir Pantalón Slim al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-slim" aria-label="AÃ±adir PantalÃ³n Slim al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Slim a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir PantalÃ³n Slim a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -345,17 +344,17 @@
             <span class="product-card__badge">Oferta</span>
             <div class="product-card__image" aria-hidden="true"></div>
             <h3 id="fav-7-name"><a href="producto.html?id=blusa-estampada">Blusa Estampada</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★★</span><span class="visually-hidden">5 de 5 estrellas</span></p>
-            <p class="product-card__desc">Blusa con estampado ligero, un toque distinto para el día a día.</p>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span><span class="visually-hidden">5 de 5 estrellas</span></p>
+            <p class="product-card__desc">Blusa con estampado ligero, un toque distinto para el dÃ­a a dÃ­a.</p>
             <div class="product-card__price-row">
               <p class="product-card__price"><span class="visually-hidden">Precio: </span>$44.99</p>
               <span class="product-card__original-price"><span class="visually-hidden">Precio anterior: </span>$56.24</span>
               <span class="product-card__discount"><span class="visually-hidden">Descuento: </span>-20%</span>
             </div>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-estampada" aria-label="Añadir Blusa Estampada al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="blusa-estampada" aria-label="AÃ±adir Blusa Estampada al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Blusa Estampada a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir Blusa Estampada a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -365,13 +364,13 @@
           <article class="product-card" role="listitem" aria-labelledby="fav-8-name">
             <img class="product-card__image" src="img/vestido-casual.jpg" alt="Vestido Casual: vestido lila de tiras con estampado floral y lazo en la cintura" width="800" height="533" loading="lazy">
             <h3 id="fav-8-name"><a href="producto.html?id=vestido-casual">Vestido Casual</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
-            <p class="product-card__desc">Vestido cómodo de uso diario, fácil de combinar.</p>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜†</span><span class="visually-hidden">4 de 5 estrellas</span></p>
+            <p class="product-card__desc">Vestido cÃ³modo de uso diario, fÃ¡cil de combinar.</p>
             <p class="product-card__price"><span class="visually-hidden">Precio: </span>$69.99</p>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-casual" aria-label="Añadir Vestido Casual al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="vestido-casual" aria-label="AÃ±adir Vestido Casual al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Vestido Casual a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir Vestido Casual a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -380,14 +379,14 @@
 
           <article class="product-card" role="listitem" aria-labelledby="fav-9-name">
             <div class="product-card__image product-card__image--alt2" aria-hidden="true"></div>
-            <h3 id="fav-9-name"><a href="producto.html?id=pantalon-wide-leg">Pantalón Wide Leg</a></h3>
-            <p class="product-card__rating"><span aria-hidden="true">★★★★☆</span><span class="visually-hidden">4 de 5 estrellas</span></p>
-            <p class="product-card__desc">Pantalón de pierna ancha con caída fluida y mucha comodidad.</p>
+            <h3 id="fav-9-name"><a href="producto.html?id=pantalon-wide-leg">PantalÃ³n Wide Leg</a></h3>
+            <p class="product-card__rating"><span aria-hidden="true">â˜…â˜…â˜…â˜…â˜†</span><span class="visually-hidden">4 de 5 estrellas</span></p>
+            <p class="product-card__desc">PantalÃ³n de pierna ancha con caÃ­da fluida y mucha comodidad.</p>
             <p class="product-card__price"><span class="visually-hidden">Precio: </span>$59.99</p>
-            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-wide-leg" aria-label="Añadir Pantalón Wide Leg al carrito">
-              Añadir al carrito
+            <button type="button" class="btn btn--primary" data-action="add-to-cart" data-product-id="pantalon-wide-leg" aria-label="AÃ±adir PantalÃ³n Wide Leg al carrito">
+              AÃ±adir al carrito
             </button>
-            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="Añadir Pantalón Wide Leg a favoritos">
+            <button type="button" class="product-card__favorite" data-action="add-to-favorite" aria-label="AÃ±adir PantalÃ³n Wide Leg a favoritos">
               <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
               </svg>
@@ -427,36 +426,36 @@
       </div>
     </section>
 
-    <!-- "Así diseñamos": quiénes diseñan y cómo, inspirada en una referencia
-         que compartió el usuario. -->
+    <!-- "AsÃ­ diseÃ±amos": quiÃ©nes diseÃ±an y cÃ³mo, inspirada en una referencia
+         que compartiÃ³ el usuario. -->
     <section class="news-studio" aria-labelledby="news-studio-heading">
       <div class="container news-studio__layout">
         <div class="news-studio__brand">
           <h2 id="news-studio-heading" class="news-studio__title">Purple <span class="news-studio__title-accent">Bloom</span></h2>
-          <img class="news-studio__photo" src="img/taller-diseno.jpg" alt="El equipo de diseño de Purple Bloom bocetando y eligiendo telas en el taller" width="900" height="1200" loading="lazy">
+          <img class="news-studio__photo" src="img/taller-diseno.jpg" alt="El equipo de diseÃ±o de Purple Bloom bocetando y eligiendo telas en el taller" width="900" height="1200" loading="lazy">
         </div>
 
         <div class="news-studio__process">
           <h3 class="news-studio__subhead">Color, textura y oficio hechos a mano</h3>
-          <p>Cada colección empieza en un boceto: una silueta, una paleta de color, una idea de cómo debería caer la tela sobre el cuerpo.</p>
-          <p>De ahí pasa a la mesa de corte. Elegimos cada textura a mano, probamos combinaciones de color y ajustamos el patrón hasta que la prenda se siente tan bien como se ve.</p>
-          <p>Del boceto a la percha: cada pieza de Purple Bloom pasa por manos reales antes de llegar a tu clóset.</p>
+          <p>Cada colecciÃ³n empieza en un boceto: una silueta, una paleta de color, una idea de cÃ³mo deberÃ­a caer la tela sobre el cuerpo.</p>
+          <p>De ahÃ­ pasa a la mesa de corte. Elegimos cada textura a mano, probamos combinaciones de color y ajustamos el patrÃ³n hasta que la prenda se siente tan bien como se ve.</p>
+          <p>Del boceto a la percha: cada pieza de Purple Bloom pasa por manos reales antes de llegar a tu clÃ³set.</p>
         </div>
 
         <ul class="news-studio__team">
           <li class="news-studio__member">
             <div class="news-studio__avatar" aria-hidden="true">VR</div>
             <div>
-              <h4 class="news-studio__member-name">Valentina Ríos</h4>
-              <p class="news-studio__member-role">Diseñadora principal</p>
-              <p class="news-studio__member-desc">Lidera cada colección desde el primer boceto hasta la pasarela.</p>
+              <h4 class="news-studio__member-name">Valentina RÃ­os</h4>
+              <p class="news-studio__member-role">DiseÃ±adora principal</p>
+              <p class="news-studio__member-desc">Lidera cada colecciÃ³n desde el primer boceto hasta la pasarela.</p>
             </div>
           </li>
           <li class="news-studio__member">
             <div class="news-studio__avatar" aria-hidden="true">MF</div>
             <div>
-              <h4 class="news-studio__member-name">Mateo Fernández</h4>
-              <p class="news-studio__member-role">Diseñador de tejidos</p>
+              <h4 class="news-studio__member-name">Mateo FernÃ¡ndez</h4>
+              <p class="news-studio__member-role">DiseÃ±ador de tejidos</p>
               <p class="news-studio__member-desc">Selecciona las telas y texturas que definen cada temporada.</p>
             </div>
           </li>
@@ -464,16 +463,16 @@
             <div class="news-studio__avatar" aria-hidden="true">CD</div>
             <div>
               <h4 class="news-studio__member-name">Camila Duarte</h4>
-              <p class="news-studio__member-role">Diseñadora de color</p>
-              <p class="news-studio__member-desc">Define las paletas que inspiran cada colección de Purple Bloom.</p>
+              <p class="news-studio__member-role">DiseÃ±adora de color</p>
+              <p class="news-studio__member-desc">Define las paletas que inspiran cada colecciÃ³n de Purple Bloom.</p>
             </div>
           </li>
           <li class="news-studio__member">
             <div class="news-studio__avatar" aria-hidden="true">JS</div>
             <div>
-              <h4 class="news-studio__member-name">Joaquín Silva</h4>
+              <h4 class="news-studio__member-name">JoaquÃ­n Silva</h4>
               <p class="news-studio__member-role">Patronista</p>
-              <p class="news-studio__member-desc">Convierte cada boceto en un patrón que se ajusta a cada cuerpo.</p>
+              <p class="news-studio__member-desc">Convierte cada boceto en un patrÃ³n que se ajusta a cada cuerpo.</p>
             </div>
           </li>
         </ul>
@@ -487,7 +486,7 @@
           <div class="contact-section__card">
             <header class="section-header">
               <h2 id="contact-form-heading">Formulario de contacto</h2>
-              <p>¿Tienes dudas o comentarios? Escríbenos y te responderemos pronto.</p>
+              <p>Â¿Tienes dudas o comentarios? EscrÃ­benos y te responderemos pronto.</p>
             </header>
 
             <form class="form-contacto" aria-label="Enviar mensaje de contacto" novalidate>
@@ -508,7 +507,7 @@
                 <span class="field-error" id="email-error"></span>
               </div>
               <div class="form-group">
-                <label for="telefono">Teléfono (opcional)</label>
+                <label for="telefono">TelÃ©fono (opcional)</label>
                 <div class="field-control">
                   <input id="telefono" type="tel" name="telefono" autocomplete="tel" aria-describedby="telefono-error" pattern="[0-9+\-\s()]{7,}" placeholder=" ">
                   <span class="field-icon" aria-hidden="true"></span>
@@ -529,7 +528,7 @@
           </div>
 
           <div class="contact-section__decor" aria-hidden="true">
-            <p class="contact-section__decor-text">Estamos aquí para ayudarte, escríbenos por el medio que prefieras.</p>
+            <p class="contact-section__decor-text">Estamos aquÃ­ para ayudarte, escrÃ­benos por el medio que prefieras.</p>
             <ul class="contact-section__icons">
               <li class="contact-section__icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 6h18v12H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M3 6l9 7 9-7" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -563,12 +562,12 @@
         <h2 id="footer-links-heading">Enlaces</h2>
         <ul>
           <li><a href="#inicio">Inicio</a></li>
-          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a href="catalogo.html">CatÃ¡logo</a></li>
           <li><a href="mi-cuenta.html#favoritos-guardados">Favoritos</a></li>
-          <li><a href="iniciar-sesion.html">Iniciar sesión</a></li>
+          <li><a href="iniciar-sesion.html">Iniciar sesiÃ³n</a></li>
           <li><a href="asistente-colores.html">Asistente de color</a></li>
-          <li><a href="privacidad.html">Política de privacidad</a></li>
-          <li><a href="terminos.html">Términos y condiciones</a></li>
+          <li><a href="privacidad.html">PolÃ­tica de privacidad</a></li>
+          <li><a href="terminos.html">TÃ©rminos y condiciones</a></li>
         </ul>
       </nav>
 
