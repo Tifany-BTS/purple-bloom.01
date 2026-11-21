@@ -1,11 +1,11 @@
-﻿(function (): void {
-  // size: talla elegida en la tarjeta o en la pÃ¡gina de producto. Opcional
+(function (): void {
+  // size: talla elegida en la tarjeta o en la página de producto. Opcional
   // porque los carritos guardados antes de que existiera no la tienen.
   type CartLine = { id: string; qty: number; color?: string; size?: string };
 
   const CART_KEY = "cart";
 
-  // Misma prenda en otro color u otra talla es otra lÃ­nea del carrito.
+  // Misma prenda en otro color u otra talla es otra línea del carrito.
   function isSameLine(line: CartLine, id: string, color?: string, size?: string): boolean {
     return line.id === id && line.color === color && line.size === size;
   }
@@ -61,8 +61,8 @@
     return product.colors.some((option) => option.name === color) ? color : product.colors[0].name;
   }
 
-  // qty: la pÃ¡gina de producto agrega varias unidades de una vez; se suman en
-  // una sola llamada para que el aviso de calificaciÃ³n y la analÃ­tica salgan
+  // qty: la página de producto agrega varias unidades de una vez; se suman en
+  // una sola llamada para que el aviso de calificación y la analítica salgan
   // una vez, no una por unidad.
   function addToCart(id: string, color?: string, size?: string, qty = 1): void {
     const lines = getCart();
@@ -174,7 +174,7 @@
     const liveRegion = document.getElementById("carrito");
     if (liveRegion) {
       liveRegion.textContent =
-        count === 0 ? "Carrito de compras: vacÃ­o." : `Carrito de compras: ${count} producto${count === 1 ? "" : "s"}.`;
+        count === 0 ? "Carrito de compras: vacío." : `Carrito de compras: ${count} producto${count === 1 ? "" : "s"}.`;
     }
   }
 
@@ -196,7 +196,7 @@
 
     if (lines.length === 0) {
       itemsEl.innerHTML =
-        '<p class="cart-page__empty">Tu carrito estÃ¡ vacÃ­o. <a href="catalogo.html">Explora el catÃ¡logo</a>.</p>' +
+        '<p class="cart-page__empty">Tu carrito está vacío. <a href="catalogo.html">Explora el catálogo</a>.</p>' +
         '<img class="cart-page__empty-image" src="img/carrito-vacio.png" alt="" width="480" height="274">';
     } else {
       // Table-style card: a Producto / Cantidad / Precio header, then one
@@ -207,8 +207,8 @@
           if (!product) return "";
           const linePrice = product.price * line.qty;
           const isLast = index === lines.length - 1;
-          // Nombre accesible con talla y color: si hay dos lÃ­neas de la misma
-          // prenda, "Quitar Blusa Lavanda" no dirÃ­a cuÃ¡l de las dos.
+          // Nombre accesible con talla y color: si hay dos líneas de la misma
+          // prenda, "Quitar Blusa Lavanda" no diría cuál de las dos.
           const variant = [line.color, line.size ? `talla ${line.size}` : ""].filter(Boolean).join(", ");
           const label = variant ? `${product.name} (${variant})` : product.name;
           const lineData = `data-id="${product.id}" data-color="${line.color ?? ""}" data-size="${line.size ?? ""}"`;
@@ -289,7 +289,7 @@
     if (infoEl) {
       if (!user) {
         infoEl.innerHTML =
-          'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="iniciar-sesion.html">Inicia sesiÃ³n</a> para usarlos.';
+          'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="iniciar-sesion.html">Inicia sesión</a> para usarlos.';
       } else {
         const earned = Math.floor(finalTotal * PB_POINTS_EARNED_PER_DOLLAR);
         infoEl.textContent = `Tienes ${balance} puntos (equivalen a ${formatPrice(pointsToDollars(balance))}). Con esta compra ganas ${earned} puntos.`;
@@ -300,7 +300,7 @@
     if (labelEl) labelEl.textContent = `Canjear ${usable} puntos y ahorrar ${formatPrice(pointsToDollars(usable))}`;
   }
 
-  // Talla marcada en el selector que card-size.ts pone justo antes del botÃ³n
+  // Talla marcada en el selector que card-size.ts pone justo antes del botón
   // de la tarjeta (card-size.ts ya frena el clic si no hay ninguna).
   function cardSize(button: HTMLElement): string | undefined {
     const group = button.previousElementSibling;
@@ -316,7 +316,7 @@
       });
     });
 
-    // The product-detail page builds its "AÃ±adir al carrito" button after
+    // The product-detail page builds its "Añadir al carrito" button after
     // this script has already run its initial querySelectorAll above, so it
     // dispatches this event instead of relying on a listener attached here.
     document.addEventListener("purplebloom:add-to-cart", (event) => {
@@ -350,10 +350,10 @@
     });
   }
 
-  // Cada cambio vuelve a dibujar la lista, asÃ­ que el botÃ³n que tenÃ­a el foco
-  // desaparece y el foco de teclado se irÃ­a al inicio de la pÃ¡gina. Se devuelve
-  // al mismo botÃ³n de la lÃ­nea nueva; si la lÃ­nea ya no existe (se quitÃ³), al
-  // tÃ­tulo del carrito.
+  // Cada cambio vuelve a dibujar la lista, así que el botón que tenía el foco
+  // desaparece y el foco de teclado se iría al inicio de la página. Se devuelve
+  // al mismo botón de la línea nueva; si la línea ya no existe (se quitó), al
+  // título del carrito.
   function restoreFocus(oldButton: HTMLElement, action: string): void {
     const itemsEl = document.getElementById("cart-items");
     if (!itemsEl) return;
