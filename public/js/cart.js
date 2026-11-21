@@ -1,0 +1,599 @@
+"use strict";
+(function () {
+    const CART_KEY = "cart";
+    // Misma prenda en otro color u otra talla es otra lÃ­nea del carrito.
+    function isSameLine(line, id, color, size) {
+        return line.id === id && line.color === color && line.size === size;
+    }
+    function makeLine(id, qty, color, size) {
+        const line = { id, qty };
+        if (color)
+            line.color = color;
+        if (size)
+            line.size = size;
+        return line;
+    }
+    function getCart() {
+        const raw = localStorage.getItem(CART_KEY);
+        if (!raw)
+            return [];
+        try {
+            const parsed = JSON.parse(raw);
+            if (!Array.isArray(parsed))
+                return [];
+            const valid = parsed.filter((line) => typeof line.id === "string" &&
+                typeof line.qty === "number" &&
+                (line.color === undefined || typeof line.color === "string") &&
+                (line.size === undefined || typeof line.size === "string") &&
+                findPurpleBloomProduct(line.id) !== undefined);
+            const lines = [];
+            for (const line of valid) {
+                const product = findPurpleBloomProduct(line.id);
+                const color = product?.colors?.some((option) => option.name === line.color) ? line.color : undefined;
+                const existing = lines.find((other) => isSameLine(other, line.id, color, line.size));
+                if (existing) {
+                    existing.qty += line.qty;
+                }
+                else {
+                    lines.push(makeLine(line.id, line.qty, color, line.size));
+                }
+            }
+            return lines;
+        }
+        catch {
+            return [];
+        }
+    }
+    function saveCart(lines) {
+        localStorage.setItem(CART_KEY, JSON.stringify(lines));
+    }
+    // Products with colour variants are always stored with a colour (the
+    // default one if none was picked), so "add from a card" and "add from the
+    // product page" end up on the same cart line.
+    function resolveColor(product, color) {
+        if (!product?.colors)
+            return undefined;
+        return product.colors.some((option) => option.name === color) ? color : product.colors[0].name;
+    }
+    // qty: la pÃ¡gina de producto agrega varias unidades de una vez; se suman en
+    // una sola llamada para que el aviso de calificaciÃ³n y la analÃ­tica salgan
+    // una vez, no una por unidad.
+    function addToCart(id, color, size, qty = 1) {
+        const lines = getCart();
+        const product = findPurpleBloomProduct(id);
+        if (!product || product.stock === 0)
+            return;
+        const chosenColor = resolveColor(product, color);
+        const existing = lines.find((line) => isSameLine(line, id, chosenColor, size));
+        if (existing) {
+            existing.qty += qty;
+        }
+        else {
+            lines.push(makeLine(id, qty, chosenColor, size));
+        }
+        saveCart(lines);
+        updateBadges();
+        renderCartPage();
+        pbTrack("Producto agregado al carrito", {
+            productId: id,
+            productName: product?.name,
+            color: chosenColor,
+            size,
+            quantity: qty,
+            price: product?.price,
+        });
+        // rating-prompt.ts listens for this to ask the shopper to rate the item.
+        document.dispatchEvent(new CustomEvent("purplebloom:cart-added", { detail: { id } }));
+    }
+    function setQty(id, color, size, qty) {
+        let lines = getCart();
+        if (qty < 1) {
+            lines = lines.filter((line) => !isSameLine(line, id, color, size));
+        }
+        else {
+            const existing = lines.find((line) => isSameLine(line, id, color, size));
+            if (existing)
+                existing.qty = qty;
+        }
+        saveCart(lines);
+        updateBadges();
+        renderCartPage();
+    }
+    function removeFromCart(id, color, size) {
+        const lines = getCart().filter((line) => !isSameLine(line, id, color, size));
+        saveCart(lines);
+        updateBadges();
+        renderCartPage();
+    }
+    function cartCount(lines) {
+        return lines.reduce((sum, line) => sum + line.qty, 0);
+    }
+    function cartTotal(lines) {
+        return lines.reduce((sum, line) => {
+            const product = findPurpleBloomProduct(line.id);
+            return product ? sum + product.price * line.qty : sum;
+        }, 0);
+    }
+    function formatPrice(value) {
+        return `$${value.toFixed(2)}`;
+    }
+    function roundCents(value) {
+        return Math.round(value * 100) / 100;
+    }
+    // Points the shopper can spend on this cart: capped by their balance and by
+    // the cart total (10 points = $1, so the discount never exceeds the total).
+    function maxRedeemablePoints(subtotal, balance) {
+        return Math.min(balance, Math.floor(subtotal * PB_POINTS_PER_DOLLAR_OFF));
+    }
+    function pointsToDollars(points) {
+        return roundCents(points / PB_POINTS_PER_DOLLAR_OFF);
+    }
+    function redeemCheckbox() {
+        const el = document.getElementById("points-redeem-check");
+        return el instanceof HTMLInputElement ? el : null;
+    }
+    // Points the shopper is redeeming right now (0 unless signed in, ticked and eligible).
+    function currentRedeemedPoints(subtotal) {
+        if (!pbSessionGet())
+            return 0;
+        const check = redeemCheckbox();
+        if (!check || !check.checked)
+            return 0;
+        return maxRedeemablePoints(subtotal, pbPointsGet());
+    }
+    function updateBadges() {
+        const lines = getCart();
+        const count = cartCount(lines);
+        document.querySelectorAll(".cart-fab__count").forEach((badge) => {
+            const previousCount = badge.dataset.count;
+            badge.textContent = String(count);
+            badge.hidden = count === 0;
+            badge.dataset.count = String(count);
+            if (previousCount !== undefined && previousCount !== String(count) && count > 0) {
+                badge.classList.remove("cart-fab__count--bump");
+                void badge.offsetWidth; // restart the animation if it's already running
+                badge.classList.add("cart-fab__count--bump");
+            }
+        });
+        const liveRegion = document.getElementById("carrito");
+        if (liveRegion) {
+            liveRegion.textContent =
+                count === 0 ? "Carrito de compras: vacÃ­o." : `Carrito de compras: ${count} producto${count === 1 ? "" : "s"}.`;
+        }
+    }
+    function productMediaHtml(product, color) {
+        const src = product.colors?.find((option) => option.name === color)?.imageSrc ?? product.imageSrc;
+        if (src) {
+            return `<img class="cart-item__image" src="${src}" alt="" width="80" height="80">`;
+        }
+        const variantClass = product.swatch ? ` product-card__image--${product.swatch}` : "";
+        return `<div class="cart-item__image product-card__image${variantClass}" aria-hidden="true"></div>`;
+    }
+    function renderCartPage() {
+        const itemsEl = document.getElementById("cart-items");
+        const submitBtn = document.getElementById("checkout-submit");
+        if (!itemsEl)
+            return;
+        const lines = getCart();
+        if (lines.length === 0) {
+            itemsEl.innerHTML =
+                '<p class="cart-page__empty">Tu carrito estÃ¡ vacÃ­o. <a href="catalogo.html">Explora el catÃ¡logo</a>.</p>' +
+                    '<img class="cart-page__empty-image" src="img/carrito-vacio.png" alt="" width="480" height="274">';
+        }
+        else {
+            // Table-style card: a Producto / Cantidad / Precio header, then one
+            // block per line. The last block's footer also carries the cart subtotal.
+            const rows = lines
+                .map((line, index) => {
+                const product = findPurpleBloomProduct(line.id);
+                if (!product)
+                    return "";
+                const linePrice = product.price * line.qty;
+                const isLast = index === lines.length - 1;
+                // Nombre accesible con talla y color: si hay dos lÃ­neas de la misma
+                // prenda, "Quitar Blusa Lavanda" no dirÃ­a cuÃ¡l de las dos.
+                const variant = [line.color, line.size ? `talla ${line.size}` : ""].filter(Boolean).join(", ");
+                const label = variant ? `${product.name} (${variant})` : product.name;
+                const lineData = `data-id="${product.id}" data-color="${line.color ?? ""}" data-size="${line.size ?? ""}"`;
+                return `
+            <article class="cart-item" data-cart-item="${product.id}">
+              <div class="cart-item__product">
+                ${productMediaHtml(product, line.color)}
+                <div class="cart-item__info">
+                  <h2 class="cart-item__name"><a href="producto.html?id=${product.id}">${product.name}</a></h2>
+                  ${line.color ? `<p class="cart-item__color">Color: ${line.color}</p>` : ""}
+                  ${line.size ? `<p class="cart-item__color">Talla: ${line.size}</p>` : ""}
+                  <p class="cart-item__price">${formatPrice(product.price)}</p>
+                </div>
+              </div>
+              <div class="cart-item__qty">
+                <button type="button" class="cart-item__qty-btn" data-action="decrease" ${lineData} aria-label="Quitar una unidad de ${label}">&minus;</button>
+                <span class="cart-item__qty-value"><span class="visually-hidden">Cantidad: </span>${line.qty}</span>
+                <button type="button" class="cart-item__qty-btn" data-action="increase" ${lineData} aria-label="Agregar una unidad de ${label}">+</button>
+              </div>
+              <p class="cart-item__line-price">${formatPrice(linePrice)}</p>
+              <div class="cart-item__footer">
+                <button type="button" class="cart-item__remove" data-action="remove" ${lineData} aria-label="Quitar ${label} del carrito">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Quitar
+                </button>
+                ${isLast ? `<p class="cart-item__subtotal">Subtotal: <strong>${formatPrice(cartTotal(lines))}</strong></p>` : ""}
+              </div>
+            </article>
+          `;
+            })
+                .join("");
+            itemsEl.innerHTML = `
+        <div class="cart-table">
+          <div class="cart-table__head" aria-hidden="true">
+            <span>Producto</span>
+            <span>Cantidad</span>
+            <span>Precio</span>
+          </div>
+          ${rows}
+        </div>
+      `;
+        }
+        renderTotals(cartTotal(lines));
+        if (submitBtn instanceof HTMLButtonElement)
+            submitBtn.disabled = lines.length === 0;
+    }
+    // Total, points discount line and the "redeem points" block in the summary.
+    function renderTotals(subtotal) {
+        const totalEl = document.getElementById("cart-total");
+        const discountEl = document.getElementById("cart-points-discount");
+        const infoEl = document.getElementById("points-redeem-info");
+        const optionEl = document.getElementById("points-redeem-option");
+        const labelEl = document.getElementById("points-redeem-label");
+        const check = redeemCheckbox();
+        if (!totalEl)
+            return;
+        const user = pbSessionGet();
+        const balance = user ? pbPointsGet() : 0;
+        const usable = user ? maxRedeemablePoints(subtotal, balance) : 0;
+        if (check && usable === 0)
+            check.checked = false;
+        const redeemed = currentRedeemedPoints(subtotal);
+        const discount = pointsToDollars(redeemed);
+        const finalTotal = roundCents(Math.max(0, subtotal - discount));
+        totalEl.textContent = formatPrice(finalTotal);
+        if (discountEl) {
+            discountEl.hidden = redeemed === 0;
+            discountEl.textContent = redeemed > 0 ? `Puntos canjeados (${redeemed} pts): âˆ’${formatPrice(discount)}` : "";
+        }
+        if (infoEl) {
+            if (!user) {
+                infoEl.innerHTML =
+                    'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="iniciar-sesion.html">Inicia sesiÃ³n</a> para usarlos.';
+            }
+            else {
+                const earned = Math.floor(finalTotal * PB_POINTS_EARNED_PER_DOLLAR);
+                infoEl.textContent = `Tienes ${balance} puntos (equivalen a ${formatPrice(pointsToDollars(balance))}). Con esta compra ganas ${earned} puntos.`;
+            }
+        }
+        if (optionEl)
+            optionEl.hidden = !user || usable === 0;
+        if (labelEl)
+            labelEl.textContent = `Canjear ${usable} puntos y ahorrar ${formatPrice(pointsToDollars(usable))}`;
+    }
+    // Talla marcada en el selector que card-size.ts pone justo antes del botÃ³n
+    // de la tarjeta (card-size.ts ya frena el clic si no hay ninguna).
+    function cardSize(button) {
+        const group = button.previousElementSibling;
+        if (!(group instanceof HTMLElement) || !group.classList.contains("card-size"))
+            return undefined;
+        return group.querySelector("input:checked")?.value;
+    }
+    function wireAddToCartButtons() {
+        document.querySelectorAll('[data-action="add-to-cart"]').forEach((button) => {
+            button.addEventListener("click", () => {
+                const id = button.getAttribute("data-product-id");
+                if (id)
+                    addToCart(id, undefined, cardSize(button));
+            });
+        });
+        // The product-detail page builds its "AÃ±adir al carrito" button after
+        // this script has already run its initial querySelectorAll above, so it
+        // dispatches this event instead of relying on a listener attached here.
+        document.addEventListener("purplebloom:add-to-cart", (event) => {
+            const detail = event.detail;
+            if (detail?.id)
+                addToCart(detail.id, detail.color, detail.size, detail.qty ?? 1);
+        });
+    }
+    function wireCartItemActions() {
+        const itemsEl = document.getElementById("cart-items");
+        if (!itemsEl)
+            return;
+        itemsEl.addEventListener("click", (event) => {
+            const target = event.target;
+            const button = target.closest("[data-action]");
+            if (!button)
+                return;
+            const id = button.getAttribute("data-id");
+            const action = button.getAttribute("data-action");
+            if (!id || !action)
+                return;
+            const color = button.getAttribute("data-color") || undefined;
+            const size = button.getAttribute("data-size") || undefined;
+            const current = getCart().find((line) => isSameLine(line, id, color, size))?.qty ?? 0;
+            if (action === "increase")
+                setQty(id, color, size, current + 1);
+            if (action === "decrease")
+                setQty(id, color, size, current - 1);
+            if (action === "remove")
+                removeFromCart(id, color, size);
+            restoreFocus(button, action);
+        });
+    }
+    // Cada cambio vuelve a dibujar la lista, asÃ­ que el botÃ³n que tenÃ­a el foco
+    // desaparece y el foco de teclado se irÃ­a al inicio de la pÃ¡gina. Se devuelve
+    // al mismo botÃ³n de la lÃ­nea nueva; si la lÃ­nea ya no existe (se quitÃ³), al
+    // tÃ­tulo del carrito.
+    function restoreFocus(oldButton, action) {
+        const itemsEl = document.getElementById("cart-items");
+        if (!itemsEl)
+            return;
+        const sameButton = Array.from(itemsEl.querySelectorAll(`[data-action="${action}"]`)).find((candidate) => candidate.dataset.id === oldButton.dataset.id &&
+            candidate.dataset.color === oldButton.dataset.color &&
+            candidate.dataset.size === oldButton.dataset.size);
+        if (sameButton) {
+            sameButton.focus();
+            return;
+        }
+        const heading = document.getElementById("cart-heading");
+        if (heading) {
+            heading.tabIndex = -1;
+            heading.focus();
+        }
+    }
+    function wireCheckoutForm() {
+        const form = document.getElementById("checkout-form");
+        const feedback = document.getElementById("checkout-feedback");
+        if (!(form instanceof HTMLFormElement) || !feedback)
+            return;
+        const formEl = form;
+        const feedbackEl = feedback;
+        const rules = [
+            {
+                id: "checkout-nombre",
+                validate: (value) => {
+                    const trimmed = value.trim();
+                    if (trimmed.length === 0)
+                        return "Ingresa tu nombre completo.";
+                    if (trimmed.length < 2)
+                        return "El nombre es demasiado corto.";
+                    return null;
+                },
+            },
+            {
+                id: "checkout-direccion",
+                validate: (value) => {
+                    const trimmed = value.trim();
+                    if (trimmed.length === 0)
+                        return "Ingresa tu dirección de envío.";
+                    if (trimmed.length < 5)
+                        return "Ingresa una dirección completa.";
+                    return null;
+                },
+            },
+            {
+                id: "checkout-email",
+                validate: (value) => {
+                    const trimmed = value.trim();
+                    const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (trimmed.length === 0)
+                        return "Ingresa tu correo electrónico.";
+                    if (!EMAIL_PATTERN.test(trimmed))
+                        return "Ingresa un correo electrónico válido.";
+                    return null;
+                },
+            },
+        ];
+        function getField(id) {
+            return formEl.querySelector(`#${id}`);
+        }
+        function setFieldError(id, message) {
+            const field = getField(id);
+            const errorEl = document.getElementById(`${id}-error`);
+            if (!field || !errorEl)
+                return;
+            if (message) {
+                field.setAttribute("aria-invalid", "true");
+                field.style.borderColor = "#dc2626";
+                errorEl.style.color = "#dc2626";
+                errorEl.textContent = message;
+            }
+            else {
+                field.removeAttribute("aria-invalid");
+                field.style.borderColor = "";
+                errorEl.textContent = "";
+            }
+        }
+        const pickupNote = document.getElementById("checkout-retiro-note");
+        function deliveryMethod() {
+            const chosen = formEl.querySelector('input[name="entrega"]:checked');
+            return chosen?.value === "tienda" ? "tienda" : "domicilio";
+        }
+        function syncDelivery() {
+            const isPickup = deliveryMethod() === "tienda";
+            const address = getField("checkout-direccion");
+            if (pickupNote)
+                pickupNote.hidden = !isPickup;
+            if (address) {
+                address.disabled = isPickup;
+                address.required = !isPickup;
+                if (isPickup) {
+                    address.value = "No aplica para retiro";
+                    address.placeholder = "No aplica para retiro";
+                }
+                else {
+                    if (address.value === "No aplica para retiro")
+                        address.value = "";
+                    address.placeholder = " ";
+                }
+            }
+            if (isPickup)
+                setFieldError("checkout-direccion", null);
+        }
+        formEl.querySelectorAll('input[name="entrega"]').forEach((radio) => {
+            radio.addEventListener("change", syncDelivery);
+        });
+        syncDelivery();
+        redeemCheckbox()?.addEventListener("change", () => renderTotals(cartTotal(getCart())));
+        const touched = new Set();
+        for (const rule of rules) {
+            const field = getField(rule.id);
+            if (!field)
+                continue;
+            const validate = () => {
+                if (rule.id === "checkout-direccion" && deliveryMethod() === "tienda")
+                    return;
+                setFieldError(rule.id, rule.validate(field.value));
+            };
+            field.addEventListener("blur", () => {
+                touched.add(rule.id);
+                validate();
+            });
+            field.addEventListener("input", () => {
+                if (touched.has(rule.id))
+                    validate();
+            });
+        }
+        function openOrderConfirmationModal(summaryHtml, onFinalize) {
+            document.getElementById("order-confirmation-modal")?.remove();
+            const backdrop = document.createElement("div");
+            backdrop.id = "order-confirmation-modal";
+            backdrop.setAttribute("role", "dialog");
+            backdrop.setAttribute("aria-modal", "true");
+            backdrop.setAttribute("aria-labelledby", "order-modal-title");
+            backdrop.style.cssText =
+                "position:fixed;inset:0;z-index:9999;background:rgba(15,10,25,0.65);display:flex;align-items:center;justify-content:center;padding:1rem;";
+            backdrop.innerHTML = `
+        <div style="background:var(--color-surface, #fff);color:var(--color-text, #1f1630);max-width:480px;width:100%;border-radius:16px;padding:1.5rem;box-shadow:0 20px 45px rgba(0,0,0,0.3);position:relative;">
+          <button type="button" data-modal-close aria-label="Cerrar ventana" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:inherit;">&times;</button>
+          <h2 id="order-modal-title" style="margin:0 0 0.5rem;font-size:1.35rem;color:var(--color-primary, #6d28d9);">¡Orden Confirmada!</h2>
+          <p style="margin:0 0 1rem;font-size:0.95rem;opacity:0.85;">Revisa el resumen de tu pedido simbólico antes de finalizar:</p>
+          <div style="background:rgba(109,40,217,0.06);border-radius:10px;padding:1rem;margin-bottom:1.25rem;font-size:0.92rem;line-height:1.5;">
+            ${summaryHtml}
+          </div>
+          <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+            <button type="button" class="btn" data-modal-close>Cancelar</button>
+            <button type="button" class="btn btn--primary" data-modal-finalize>Finalizar y Cerrar</button>
+          </div>
+        </div>
+      `;
+            const closeModalWithoutClearing = () => {
+                backdrop.remove();
+            };
+            backdrop.addEventListener("click", (e) => {
+                if (e.target === backdrop)
+                    closeModalWithoutClearing();
+            });
+            backdrop.querySelectorAll("[data-modal-close]").forEach((btn) => {
+                btn.addEventListener("click", closeModalWithoutClearing);
+            });
+            backdrop.querySelector("[data-modal-finalize]")?.addEventListener("click", () => {
+                backdrop.remove();
+                onFinalize();
+            });
+            document.body.appendChild(backdrop);
+            backdrop.querySelector("[data-modal-finalize]")?.focus();
+        }
+        formEl.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (getCart().length === 0)
+                return;
+            let isValid = true;
+            let firstInvalid = null;
+            const isPickup = deliveryMethod() === "tienda";
+            for (const rule of rules) {
+                if (isPickup && rule.id === "checkout-direccion")
+                    continue;
+                const field = getField(rule.id);
+                if (!field)
+                    continue;
+                const message = rule.validate(field.value);
+                setFieldError(rule.id, message);
+                if (message) {
+                    isValid = false;
+                    if (!firstInvalid)
+                        firstInvalid = field;
+                }
+            }
+            if (!isValid) {
+                feedbackEl.textContent = "Revisa los campos marcados en rojo antes de continuar.";
+                feedbackEl.classList.add("form-feedback--error");
+                feedbackEl.classList.remove("form-feedback--success");
+                firstInvalid?.focus();
+                return;
+            }
+            feedbackEl.textContent = "";
+            const purchasedLines = getCart();
+            const subtotal = cartTotal(purchasedLines);
+            const redeemed = currentRedeemedPoints(subtotal);
+            const paidTotal = roundCents(Math.max(0, subtotal - pointsToDollars(redeemed)));
+            const customerName = getField("checkout-nombre")?.value.trim() ?? "";
+            const customerEmail = getField("checkout-email")?.value.trim() ?? "";
+            const customerAddress = isPickup ? "Retiro en tienda (No aplica envío)" : (getField("checkout-direccion")?.value.trim() ?? "");
+            const itemsListHtml = purchasedLines
+                .map((line) => {
+                const p = findPurpleBloomProduct(line.id);
+                const meta = [line.color, line.size ? `Talla ${line.size}` : ""].filter(Boolean).join(" · ");
+                return `<li><strong>${line.qty}x ${p?.name ?? line.id}</strong> ${meta ? `(${meta})` : ""} — ${formatPrice((p?.price ?? 0) * line.qty)}</li>`;
+            })
+                .join("");
+            const summaryHtml = `
+        <p style="margin:0 0 0.4rem;"><strong>Cliente:</strong> ${customerName} (${customerEmail})</p>
+        <p style="margin:0 0 0.6rem;"><strong>Entrega:</strong> ${customerAddress}</p>
+        <ul style="margin:0 0 0.75rem;padding-left:1.2rem;">${itemsListHtml}</ul>
+        <p style="margin:0;font-size:1.05rem;font-weight:700;border-top:1px solid rgba(0,0,0,0.1);padding-top:0.5rem;">
+          Total pagado: ${formatPrice(paidTotal)}
+        </p>
+      `;
+            openOrderConfirmationModal(summaryHtml, () => {
+                pbTrack("Checkout completado", {
+                    items: cartCount(purchasedLines),
+                    total: paidTotal,
+                    deliveryMethod: deliveryMethod(),
+                    pointsRedeemed: redeemed,
+                });
+                let pointsMessage = "";
+                if (pbSessionGet()) {
+                    const earned = Math.floor(paidTotal * PB_POINTS_EARNED_PER_DOLLAR);
+                    const newBalance = pbPointsGet() - redeemed + earned;
+                    pbPointsSet(newBalance);
+                    pointsMessage = ` ${redeemed > 0 ? `Canjeaste ${redeemed} puntos. ` : ""}Ganaste ${earned} puntos: ahora tienes ${newBalance}.`;
+                    pbOrdersAdd({
+                        items: purchasedLines.map((line) => {
+                            const product = findPurpleBloomProduct(line.id);
+                            return { id: line.id, name: product?.name ?? line.id, qty: line.qty, color: line.color, size: line.size, price: product?.price ?? 0 };
+                        }),
+                        total: paidTotal,
+                        deliveryMethod: deliveryMethod(),
+                    });
+                }
+                saveCart([]);
+                updateBadges();
+                renderCartPage();
+                formEl.reset();
+                touched.clear();
+                syncDelivery();
+                renderCartPage();
+                feedbackEl.textContent = (isPickup ? "¡Gracias por tu compra! Te avisaremos por correo cuando esté listo para retirar en tienda." : "¡Gracias por tu compra! Te enviamos la confirmación por correo.") + pointsMessage + " (Simulación: no se procesó ningún pago real.)";
+                feedbackEl.classList.add("form-feedback--success");
+                feedbackEl.classList.remove("form-feedback--error");
+                const submitBtn = document.getElementById("checkout-submit");
+                if (submitBtn)
+                    pbPetalBurst(submitBtn);
+            });
+        });
+    }
+    updateBadges();
+    wireAddToCartButtons();
+    wireCartItemActions();
+    wireCheckoutForm();
+    renderCartPage();
+})();
