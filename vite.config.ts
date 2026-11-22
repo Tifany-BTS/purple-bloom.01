@@ -10,6 +10,7 @@ const input = Object.fromEntries(
 
 export default defineConfig({
   plugins: [react()],
+  base: "./",
   publicDir: "public",
   build: {
     rollupOptions: {
