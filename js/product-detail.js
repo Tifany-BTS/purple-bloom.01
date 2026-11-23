@@ -76,7 +76,7 @@
                     <article class="product-card" aria-labelledby="related-${item.id}-name">
                       ${isOnOffer(item) ? '<span class="product-card__badge">Oferta</span>' : ""}
                       ${relatedMediaHtml(item)}
-                      <h3 id="related-${item.id}-name"><a href="producto.html?id=${item.id}">${item.name}</a></h3>
+                      <h3 id="related-${item.id}-name"><a href="/producto.html?id=${item.id}">${item.name}</a></h3>
                       ${ratingHtml(item)}
                       ${relatedPriceHtml(item)}
                       <button type="button" class="btn btn--small" data-related-add="${item.id}" ${item.stock === 0 ? "disabled" : ""} aria-label="Añadir ${item.name} al carrito">

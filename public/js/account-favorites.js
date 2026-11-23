@@ -53,10 +53,10 @@
             <path d="M12 21s-7.5-4.6-10-9.1C0.5 8.4 2 5 5.5 5c2 0 3.5 1.2 4.5 2.7C11 6.2 12.5 5 14.5 5 18 5 19.5 8.4 18 11.9 15.5 16.4 12 21 12 21z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
         </button>
-        <h3 id="${headingId}"><a href="producto.html?id=${product.id}">${product.name}</a></h3>
+        <h3 id="${headingId}"><a href="/producto.html?id=${product.id}">${product.name}</a></h3>
         ${ratingHtml(product)}
         ${priceHtml(product)}
-        <a href="producto.html?id=${product.id}" class="btn btn--primary">Ver producto</a>
+        <a href="/producto.html?id=${product.id}" class="btn btn--primary">Ver producto</a>
       </article>
     `;
     }

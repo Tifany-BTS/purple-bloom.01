@@ -298,7 +298,7 @@ function pbApplySessionToDom() {
         else {
             accountGreeting.append("Todavía no iniciaste sesión, así que ves un ejemplo de tu cuenta. ");
             const link = document.createElement("a");
-            link.href = "iniciar-sesion.html";
+            link.href = "/iniciar-sesion.html";
             link.textContent = "Iniciar sesión";
             accountGreeting.append(link, ".");
         }
@@ -333,14 +333,14 @@ function pbApplySessionToDom() {
         // sesión" sin loguearse) que no aplica una vez que es un avatar.
         link.classList.remove("site-nav__login");
         link.classList.add("site-header__login--avatar");
-        link.href = "mi-cuenta.html";
+        link.href = "/mi-cuenta.html";
         link.setAttribute("aria-label", `Mi cuenta, sesión iniciada como ${user.name}`);
         link.title = `${user.name} · Mi cuenta`;
         link.removeAttribute("aria-current");
     });
-    document.querySelectorAll('.site-footer a[href="iniciar-sesion.html"]').forEach((link) => {
+    document.querySelectorAll('.site-footer a[href="/iniciar-sesion.html"]').forEach((link) => {
         link.textContent = "Mi cuenta";
-        link.href = "mi-cuenta.html";
+        link.href = "/mi-cuenta.html";
     });
     const loginFeedback = document.querySelector(".login-form ~ .form-feedback");
     if (loginFeedback) {
@@ -351,7 +351,7 @@ function pbApplySessionToDom() {
 (function () {
     document.querySelector("[data-session-logout]")?.addEventListener("click", () => {
         pbSessionLogout();
-        window.location.href = "iniciar-sesion.html";
+        window.location.href = "/iniciar-sesion.html";
     });
     pbApplySessionToDom();
 })();

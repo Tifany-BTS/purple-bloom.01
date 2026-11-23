@@ -30,7 +30,7 @@
         <article class="product-card product-card--compact" role="listitem" aria-labelledby="${headingId}" data-category="${product.category}">
           <span class="product-card__badge">Oferta</span>
           ${mediaHtml(product)}
-          <h2 id="${headingId}"><a href="producto.html?id=${product.id}">${product.name}</a></h2>
+          <h2 id="${headingId}"><a href="/producto.html?id=${product.id}">${product.name}</a></h2>
           <div class="product-card__price-row">
             <p class="product-card__price">${formatPrice(product.price)}</p>
             <span class="product-card__original-price">${formatPrice(originalPriceIfOnOffer(product) ?? product.price)}</span>

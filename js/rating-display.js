@@ -27,7 +27,7 @@
         return entry;
     }
     function productIdOf(rating) {
-        const link = rating.closest(".product-card")?.querySelector('a[href*="producto.html?id="]');
+        const link = rating.closest(".product-card")?.querySelector('a[href*="/producto.html?id="]');
         return link ? new URL(link.href, window.location.href).searchParams.get("id") : null;
     }
     function baseRatingOf(rating) {

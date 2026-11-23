@@ -200,7 +200,7 @@
               <div class="cart-item__product">
                 ${productMediaHtml(product, line.color)}
                 <div class="cart-item__info">
-                  <h2 class="cart-item__name"><a href="producto.html?id=${product.id}">${product.name}</a></h2>
+                  <h2 class="cart-item__name"><a href="/producto.html?id=${product.id}">${product.name}</a></h2>
                   ${line.color ? `<p class="cart-item__color">Color: ${line.color}</p>` : ""}
                   ${line.size ? `<p class="cart-item__color">Talla: ${line.size}</p>` : ""}
                   <p class="cart-item__price">${formatPrice(product.price)}</p>
@@ -266,7 +266,7 @@
         if (infoEl) {
             if (!user) {
                 infoEl.innerHTML =
-                    'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="iniciar-sesion.html">Inicia sesión</a> para usarlos.';
+                    'Con el Club Vip Moda ganas puntos en cada compra y los canjeas por descuentos. <a href="/iniciar-sesion.html">Inicia sesión</a> para usarlos.';
             }
             else {
                 const earned = Math.floor(finalTotal * PB_POINTS_EARNED_PER_DOLLAR);

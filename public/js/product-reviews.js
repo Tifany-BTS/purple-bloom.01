@@ -183,7 +183,7 @@
     function guestHtml() {
         return `
       <p class="product-reviews__guest">
-        <a href="iniciar-sesion.html">Iniciá sesión</a> para dejar tu reseña con tu foto de perfil.
+        <a href="/iniciar-sesion.html">Iniciá sesión</a> para dejar tu reseña con tu foto de perfil.
       </p>`;
     }
     // ---------- Lista ----------

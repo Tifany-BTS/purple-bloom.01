@@ -130,7 +130,7 @@
             pbPetalBurst(submitBtn);
         pbTrackBeforeNavigate("Registro completado");
         window.setTimeout(() => {
-            window.location.href = "mi-cuenta.html";
+            window.location.href = "/mi-cuenta.html";
         }, 1200);
     });
 })();
