@@ -25,10 +25,10 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: '3',
-    name: 'Pantalón Palazo Lila',
+    name: 'Pantalï¿½n Palazo Lila',
     category: 'Pantalones',
     price: 45.00,
-    description: 'Pantalón tiro alto de caída ligera y ajuste cómodo en tono lila pastoral.',
+    description: 'Pantalï¿½n tiro alto de caï¿½da ligera y ajuste cï¿½modo en tono lila pastoral.',
     images: ['https://via.placeholder.com/400x500?text=Pantalon+Lila'],
     colors: ['#C8A2C8', '#000000'],
     sizes: ['S', 'M', 'XL'],
@@ -36,7 +36,7 @@ export const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: '4',
-    name: 'Chaqueta Blazer Morado Místico',
+    name: 'Chaqueta Blazer Morado Mï¿½stico',
     category: 'Abrigos',
     price: 79.99,
     description: 'Blazer estructurado formal para dar un toque sofisticado a tu atuendo.',

@@ -1,4 +1,4 @@
-﻿interface VariantSelectorProps {
+interface VariantSelectorProps {
   colors: { name: string; imageSrc: string; imageAlt: string }[];
   selectedColor: string;
   onColorChange: (color: string) => void;

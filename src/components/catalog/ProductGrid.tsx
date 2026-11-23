@@ -1,4 +1,4 @@
-﻿import type { PurpleBloomProduct } from "../../services/product-service";
+import type { PurpleBloomProduct } from "../../services/product-service";
 import { ProductCard } from "./ProductCard";
 
 interface ProductGridProps {

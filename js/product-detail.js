@@ -176,7 +176,7 @@
       <div class="container product-detail__not-found">
         <h1>Producto no encontrado</h1>
         <p>El producto que buscas ya no está disponible o el enlace es incorrecto.</p>
-        <a href="catalogo.html" class="btn btn--primary">Ver catálogo</a>
+        <a href="/catalogo/" class="btn btn--primary">Ver catálogo</a>
       </div>
     `;
         return;
@@ -210,7 +210,7 @@
         ${mediaHtml(product)}
       </div>
       <div class="product-detail__info">
-        <a href="catalogo.html" class="product-detail__back">&larr; Regresar</a>
+        <a href="/catalogo/" class="product-detail__back">&larr; Regresar</a>
         <h1 id="product-detail-heading">${product.name}</h1>
         <p class="product-detail__code">Código: ${productCode}</p>
         <p class="product-detail__stock" style="font-size: 0.9rem; font-weight: 600; color: ${isOutOfStock ? '#b91c1c' : '#15803d'}; margin: 0.25rem 0 0.75rem;">

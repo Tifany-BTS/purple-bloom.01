@@ -1,4 +1,4 @@
-﻿export const PRODUCT_SIZES = ["XS", "S", "M", "L", "XL"] as const;
+export const PRODUCT_SIZES = ["XS", "S", "M", "L", "XL"] as const;
 export type ProductSize = (typeof PRODUCT_SIZES)[number];
 export type StockBySize = Record<ProductSize, number>;
 

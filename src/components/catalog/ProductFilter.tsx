@@ -1,4 +1,4 @@
-﻿interface ProductFilterProps {
+interface ProductFilterProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
   selectedCategory: string;

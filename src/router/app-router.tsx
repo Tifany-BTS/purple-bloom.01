@@ -13,7 +13,7 @@ export function AppRoutes() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<ViewCatalog />} />
         <Route path="/inicio" element={<ViewHome />} />
-        <Route path="/catalogo.html" element={<ViewCatalog />} />
+        <Route path="/catalogo/" element={<ViewCatalog />} />
         <Route path="/producto/:id" element={<ViewProductDetail />} />
         <Route path="/asistente-colores" element={<ViewColorAdvisor />} />
         <Route path="/carrito" element={<ViewCartCheckout />} />

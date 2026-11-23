@@ -1,4 +1,4 @@
-﻿import type { PurpleBloomProduct } from "../../services/product-service";
+import type { PurpleBloomProduct } from "../../services/product-service";
 import type { CartItem } from "../../stores/use-cart-store";
 
 export interface EnrichedCartLine extends CartItem {

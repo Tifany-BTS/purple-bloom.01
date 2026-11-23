@@ -1,4 +1,4 @@
-﻿import { Modal, Text, Button, Stack, List } from "@mantine/core";
+import { Modal, Text, Button, Stack, List } from "@mantine/core";
 import type { CheckoutFormValues } from "../../schemas/checkout-schema";
 import type { EnrichedCartLine } from "./CartTable";
 

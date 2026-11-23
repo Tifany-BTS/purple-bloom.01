@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router";
 import { useCartStore } from "../../stores/use-cart-store";
 import type { PurpleBloomProduct } from "../../services/product-service";

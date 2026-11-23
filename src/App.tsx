@@ -1,4 +1,4 @@
-﻿import { MantineProvider } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router";
 import { AppRoutes } from "./router/app-router";

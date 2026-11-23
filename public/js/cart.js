@@ -177,8 +177,8 @@
         const lines = getCart();
         if (lines.length === 0) {
             itemsEl.innerHTML =
-                '<p class="cart-page__empty">Tu carrito está vacío. <a href="catalogo.html">Explora el catálogo</a>.</p>' +
-                    '<img class="cart-page__empty-image" src="img/carrito-vacio.png" alt="" width="480" height="274">';
+                '<p class="cart-page__empty">Tu carrito está vacío. <a href="/catalogo/">Explora el catálogo</a>.</p>' +
+                    '<img class="cart-page__empty-image" src="/img/carrito-vacio.png" alt="" width="480" height="274">';
         }
         else {
             // Table-style card: a Producto / Cantidad / Precio header, then one

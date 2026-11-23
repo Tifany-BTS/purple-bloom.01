@@ -1,4 +1,4 @@
-﻿import type { ColorAnalysisResult } from "./CombinationGuide";
+import type { ColorAnalysisResult } from "./CombinationGuide";
 
 export function evaluateGarmentPoint(
   relX: number,

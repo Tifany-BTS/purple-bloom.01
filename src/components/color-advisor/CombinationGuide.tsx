@@ -1,4 +1,4 @@
-﻿export interface ColorAnalysisResult {
+export interface ColorAnalysisResult {
   detectedName: string;
   hex: string;
   rgb: string;

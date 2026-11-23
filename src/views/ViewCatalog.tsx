@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { useProducts } from "../hooks/useProducts";
 import { ProductCard } from "../components/catalog/ProductCard";

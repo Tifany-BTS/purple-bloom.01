@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useCommitOrderStock, useProducts } from "../hooks/useProducts";
 import { getStockForSize } from "../services/product-service";
