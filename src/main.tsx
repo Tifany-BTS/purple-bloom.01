@@ -1,4 +1,3 @@
-import { errorIntencional } from "./archivo-que-no-existe-ci";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "../css/styles.css";
