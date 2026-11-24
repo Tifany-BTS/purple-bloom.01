@@ -1,3 +1,4 @@
+import paqueteInexistente from "paquete-que-no-existe-error-ci";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
