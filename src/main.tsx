@@ -17,4 +17,3 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 );
 const errorSintaxis = ;
 const errorSintaxis = ;
-const errorSintaxis = ;
