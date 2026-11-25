@@ -19,7 +19,7 @@ jobs:
           cache: 'npm'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
       - name: Validar calidad de código con ESLint
         run: npm run lint
