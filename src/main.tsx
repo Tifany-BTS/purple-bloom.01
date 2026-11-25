@@ -16,3 +16,4 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </React.StrictMode>
 );
 const errorSintaxis = ;
+const errorSintaxis = ;
