@@ -1,34 +1,64 @@
-name: Quality Gate - React App
+name: CI/CD - Build y Deploy en Amazon S3
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  quality-gate:
+  build:
+    name: Build Frontend React
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código fuente
+      - name: Descargar código del repositorio
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Preparar entorno Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Instalar dependencias
-        run: npm install --legacy-peer-deps
+        run: npm ci
 
-      - name: Validar calidad de código con ESLint
-        run: npm run lint
-
-      - name: Compilar aplicación React
+      - name: Compilar aplicación React/Vite
         run: npm run build
 
-      - name: Almacenar artefacto dist
+      - name: Subir artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: build-dist
-          path: dist/
+          name: react-build
+          path: dist
+
+  deploy:
+    name: Deploy AWS S3
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+
+    steps:
+      - name: Descargar artefacto
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
+          path: dist
+
+      - name: Configurar credenciales AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Verificar identidad AWS
+        run: aws sts get-caller-identity
+
+      - name: Desplegar en Amazon S3
+        run: |
+          aws s3 sync dist/ s3://${{ vars.S3_BUCKET_NAME }} --delete
