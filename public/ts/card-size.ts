@@ -1,4 +1,4 @@
-﻿(function (): void {
+(function (): void {
   const SIZES = ["S", "M", "L", "XL"];
   const ERROR_MESSAGE = "Elige una talla para añadir al carrito.";
   const CARD_BUTTONS = '.product-card [data-action="add-to-cart"], .product-card [data-related-add]';

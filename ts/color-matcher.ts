@@ -1,4 +1,4 @@
-﻿(function (): void {
+(function (): void {
   interface ColorRef {
     name: string;
     hex: string;

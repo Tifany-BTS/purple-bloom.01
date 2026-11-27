@@ -1,4 +1,4 @@
-﻿(function (): void {
+(function (): void {
   const root = document.getElementById("product-detail");
   if (!root) return;
 

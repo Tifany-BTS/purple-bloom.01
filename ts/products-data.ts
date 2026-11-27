@@ -1,4 +1,4 @@
-﻿// Archivo de datos compartidos del catálogo. Expone la lista de productos
+// Archivo de datos compartidos del catálogo. Expone la lista de productos
 // de forma global para que cart.ts, product-detail.ts y catalog-filters.ts
 // puedan leer los mismos datos sin necesidad de un empaquetador de módulos.
 interface PurpleBloomProduct {
