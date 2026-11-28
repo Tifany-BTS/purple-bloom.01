@@ -1,4 +1,4 @@
-(function (): void {
+﻿(function (): void {
   interface ColorRef {
     name: string;
     hex: string;
@@ -20,8 +20,8 @@
     { name: "Beige", hex: "#e8dcc4", neutral: true },
     { name: "Crema", hex: "#f2ead6", neutral: true },
     { name: "Camel", hex: "#c19a6b", neutral: true },
-    { name: "Marrón", hex: "#6f4e37", neutral: true },
-    { name: "Café oscuro", hex: "#3e2723", neutral: true },
+    { name: "MarrÃ³n", hex: "#6f4e37", neutral: true },
+    { name: "CafÃ© oscuro", hex: "#3e2723", neutral: true },
     { name: "Azul marino", hex: "#1a2744", neutral: true },
     { name: "Dorado", hex: "#cba135", neutral: true },
     { name: "Plateado", hex: "#c0c0c2", neutral: true },
@@ -41,7 +41,7 @@
     { name: "Turquesa", hex: "#26c6da", neutral: false },
     { name: "Azul", hex: "#1e88e5", neutral: false },
     { name: "Azul cielo", hex: "#90caf9", neutral: false },
-    { name: "Índigo", hex: "#3949ab", neutral: false },
+    { name: "Ãndigo", hex: "#3949ab", neutral: false },
     { name: "Morado", hex: "#7b1fa2", neutral: false },
     { name: "Violeta", hex: "#9575cd", neutral: false },
     { name: "Lavanda", hex: "#d6c8f0", neutral: false },
@@ -125,9 +125,9 @@
   }
 
   const VERDICT_ICON: Record<Verdict, string> = {
-    bien: "✓",
-    precaucion: "⚠",
-    evitar: "✕",
+    bien: "âœ“",
+    precaucion: "âš ",
+    evitar: "âœ•",
   };
 
   function evaluateCombination(baseHsl: Hsl, baseIsNeutral: boolean, candidate: ColorRef): Combination {
@@ -138,7 +138,7 @@
         color: candidate,
         verdict: "bien",
         icon: VERDICT_ICON.bien,
-        description: "Los tonos neutros combinan con prácticamente cualquier color.",
+        description: "Los tonos neutros combinan con prÃ¡cticamente cualquier color.",
       };
     }
 
@@ -150,7 +150,7 @@
         color: candidate,
         verdict: "bien",
         icon: VERDICT_ICON.bien,
-        description: "Tonos análogos: combinación armoniosa y segura.",
+        description: "Tonos anÃ¡logos: combinaciÃ³n armoniosa y segura.",
       };
     }
     if (hueDiff < 55) {
@@ -158,7 +158,7 @@
         color: candidate,
         verdict: "bien",
         icon: VERDICT_ICON.bien,
-        description: "Tonos cercanos en la rueda cromática: combinan con naturalidad.",
+        description: "Tonos cercanos en la rueda cromÃ¡tica: combinan con naturalidad.",
       };
     }
     if (hueDiff < 100) {
@@ -175,7 +175,7 @@
           color: candidate,
           verdict: "evitar",
           icon: VERDICT_ICON.evitar,
-          description: "Dos tonos muy saturados y en tensión: evita usarlos en partes iguales.",
+          description: "Dos tonos muy saturados y en tensiÃ³n: evita usarlos en partes iguales.",
         };
       }
       return {
@@ -190,7 +190,7 @@
         color: candidate,
         verdict: "precaucion",
         icon: VERDICT_ICON.precaucion,
-        description: "Colores casi opuestos (complementarios): combinación audaz y de alto impacto, úsala con moderación.",
+        description: "Colores casi opuestos (complementarios): combinaciÃ³n audaz y de alto impacto, Ãºsala con moderaciÃ³n.",
       };
     }
     return {
@@ -252,13 +252,13 @@
     const valuesElEl: HTMLElement = valuesEl;
     const guideBodyEl: HTMLElement = guideBody;
 
-    // Eliminar botón superior antiguo si existía
+    // Eliminar botÃ³n superior antiguo si existÃ­a
     const oldTopBtn = document.getElementById("limpiar-seleccion-btn");
     if (oldTopBtn && oldTopBtn.parentElement !== resultPanelEl) {
       oldTopBtn.remove();
     }
 
-    // Colocar el botón "Limpiar selección" dentro de la tarjeta de resultado, a la derecha
+    // Colocar el botÃ³n "Limpiar selecciÃ³n" dentro de la tarjeta de resultado, a la derecha
     resultPanelEl.style.display = resultPanelEl.hidden ? "none" : "flex";
     resultPanelEl.style.alignItems = "center";
     resultPanelEl.style.justifyContent = "space-between";
@@ -270,7 +270,7 @@
       clearBtn.type = "button";
       clearBtn.id = "limpiar-seleccion-btn";
       clearBtn.className = "btn btn--small btn--outline";
-      clearBtn.textContent = "Limpiar selección";
+      clearBtn.textContent = "Limpiar selecciÃ³n";
       clearBtn.style.marginLeft = "auto";
       clearBtn.style.flexShrink = "0";
       resultPanelEl.appendChild(clearBtn);
@@ -322,10 +322,10 @@
       errorBannerEl.hidden = true;
       setResultVisible(false);
       swatchElEl.style.backgroundColor = "transparent";
-      nameElEl.textContent = "—";
-      valuesElEl.textContent = "—";
+      nameElEl.textContent = "â€”";
+      valuesElEl.textContent = "â€”";
       guideBodyEl.innerHTML =
-        '<tr><td colspan="3">Detecta un color en la prenda para ver sugerencias de combinación.</td></tr>';
+        '<tr><td colspan="3">Detecta un color en la prenda para ver sugerencias de combinaciÃ³n.</td></tr>';
     }
 
     clearBtn.addEventListener("click", () => {
@@ -410,7 +410,7 @@
           if (captureBtn instanceof HTMLElement) captureBtn.hidden = false;
         } catch {
           window.alert(
-            "No se pudo acceder a la cámara. Puedes subir una foto de la prenda en su lugar."
+            "No se pudo acceder a la cÃ¡mara. Puedes subir una foto de la prenda en su lugar."
           );
         }
       });
@@ -453,6 +453,21 @@
       return false;
     }
 
+    async function consultarAsesorIA(colorName: string, hex: string): Promise<string> {
+      const apiKey = (import.meta as any).env?.VITE_GEMINI_API_KEY;
+      if (!apiKey || apiKey.length < 30) throw new Error("API Key no configurada.");
+      const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
+      const prompt = `Eres el asesor de moda de Purple Bloom. El usuario seleccionó una prenda color ${colorName} (${hex}). Dame en máximo 3 líneas directas: qué ocasión le queda mejor, una combinación estrella y un accesorio recomendado.`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": apiKey },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] }),
+      });
+      if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sin respuesta del asesor.";
+    }
+
     function renderResult(rgb: [number, number, number]): void {
       errorBannerEl.hidden = true;
       const hex = rgbToHex(...rgb);
@@ -461,13 +476,13 @@
       setResultVisible(true);
       swatchElEl.style.backgroundColor = hex;
       nameElEl.textContent = closest.name;
-      valuesElEl.textContent = `RGB(${rgb[0]}, ${rgb[1]}, ${rgb[2]}) · ${hex}`;
+      valuesElEl.textContent = `RGB(${rgb[0]}, ${rgb[1]}, ${rgb[2]}) Â· ${hex}`;
 
       const guide = buildGuide(rgb);
       guideBodyEl.innerHTML = guide
         .map((item) => {
           const verdictText =
-            item.verdict === "bien" ? "Combina bien" : item.verdict === "precaucion" ? "Con precaución" : "Evitar";
+            item.verdict === "bien" ? "Combina bien" : item.verdict === "precaucion" ? "Con precauciÃ³n" : "Evitar";
           return `
             <tr class="guia-combinaciones__fila guia-combinaciones__fila--${item.verdict}">
               <td class="guia-combinaciones__muestra">
@@ -482,6 +497,30 @@
             </tr>`;
         })
         .join("");
+
+      let aiBox = document.getElementById("ia-consejo-box");
+      if (!aiBox) {
+        aiBox = document.createElement("div");
+        aiBox.id = "ia-consejo-box";
+        aiBox.style.cssText = "margin-top: 1rem; padding: 1rem; border-radius: 8px; background: #f5f3ff; border-left: 4px solid #7b1fa2; color: #1f2937; font-size: 0.95rem;";
+        guideBodyEl.closest("table")?.after(aiBox);
+      }
+      aiBox.innerHTML = "<strong>Asesor IA (Gemini):</strong> Analizando estilo para esta prenda...";
+      consultarAsesorIA(closest.name, hex)
+        .then((consejo) => {
+          if (aiBox) {
+            aiBox.style.background = "#f5f3ff";
+            aiBox.style.borderLeftColor = "#7b1fa2";
+            aiBox.innerHTML = `<strong>Asesor IA (Gemini):</strong> ${consejo}`;
+          }
+        })
+        .catch(() => {
+          if (aiBox) {
+            aiBox.style.background = "#fef2f2";
+            aiBox.style.borderLeftColor = "#dc2626";
+            aiBox.innerHTML = "<strong>Aviso de conexión IA:</strong> No se pudo conectar con el servicio externo de IA en este momento. Se mantiene activa la guía cromática local.";
+          }
+        });
 
       resultPanelEl.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
@@ -510,3 +549,5 @@
     init();
   }
 })();
+
+

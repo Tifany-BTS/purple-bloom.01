@@ -4,3 +4,5 @@ dist/
 .harness/harness.db
 .harness/harness.db-shm
 .harness/harness.db-wal
+
+.env
